@@ -19,8 +19,40 @@ export function activate(context: vscode.ExtensionContext) {
 			const range = new vscode.Range(srcRange.start, position);
 			const word = editor.document.getText(range);
 
+			const settings = vscode.workspace.getConfiguration('partial-autocomplete');
+
 			const completionList: vscode.CompletionList = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', document.uri, position);
-			const completionTexts = completionList.items.map(item => {
+			const completionTexts = completionList.items.filter(item => {
+														const kind = item.kind;
+														return kind == vscode.CompletionItemKind.Class && settings.get('includeCompletionItemKindClass') ||
+															kind == vscode.CompletionItemKind.Color && settings.get('includeCompletionItemKindColor') ||
+															kind == vscode.CompletionItemKind.Constant && settings.get('includeCompletionItemKindConstant') ||
+															kind == vscode.CompletionItemKind.Constructor && settings.get('includeCompletionItemKindConstructor') ||
+															kind == vscode.CompletionItemKind.Enum && settings.get('includeCompletionItemKindEnum') ||
+															kind == vscode.CompletionItemKind.EnumMember && settings.get('includeCompletionItemKindEnumMember') ||
+															kind == vscode.CompletionItemKind.Event && settings.get('includeCompletionItemKindEvent') ||
+															kind == vscode.CompletionItemKind.Field && settings.get('includeCompletionItemKindField') ||
+															kind == vscode.CompletionItemKind.File && settings.get('includeCompletionItemKindFile') ||
+															kind == vscode.CompletionItemKind.Folder && settings.get('includeCompletionItemKindFolder') ||
+															kind == vscode.CompletionItemKind.Function && settings.get('includeCompletionItemKindFunction') ||
+															kind == vscode.CompletionItemKind.Interface && settings.get('includeCompletionItemKindInterface') ||
+															kind == vscode.CompletionItemKind.Issue && settings.get('includeCompletionItemKindIssue') ||
+															kind == vscode.CompletionItemKind.Keyword && settings.get('includeCompletionItemKindKeyword') ||
+															kind == vscode.CompletionItemKind.Method && settings.get('includeCompletionItemKindMethod') ||
+															kind == vscode.CompletionItemKind.Module && settings.get('includeCompletionItemKindModule') ||
+															kind == vscode.CompletionItemKind.Operator && settings.get('includeCompletionItemKindOperator') ||
+															kind == vscode.CompletionItemKind.Property && settings.get('includeCompletionItemKindProperty') ||
+															kind == vscode.CompletionItemKind.Reference && settings.get('includeCompletionItemKindReference') ||
+															kind == vscode.CompletionItemKind.Snippet && settings.get('includeCompletionItemKindSnippet') ||
+															kind == vscode.CompletionItemKind.Struct && settings.get('includeCompletionItemKindStruct') ||
+															kind == vscode.CompletionItemKind.Text && settings.get('includeCompletionItemKindText') ||
+															kind == vscode.CompletionItemKind.TypeParameter && settings.get('includeCompletionItemKindTypeParameter') ||
+															kind == vscode.CompletionItemKind.Unit && settings.get('includeCompletionItemKindUnit') ||
+															kind == vscode.CompletionItemKind.User && settings.get('includeCompletionItemKindUser') ||
+															kind == vscode.CompletionItemKind.Value && settings.get('includeCompletionItemKindValue') ||
+															kind == vscode.CompletionItemKind.Variable && settings.get('includeCompletionItemKindVariable');
+													})
+													.map(item => {
 														if (item.insertText instanceof vscode.SnippetString) {
 															return item.insertText.value;
 														}
@@ -36,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
 					let completion = new vscode.CompletionItem(item);
 					completion.sortText = ' ';
 					completion.detail = ':partial';
-					completion.kind = vscode.CompletionItemKind.Snippet;
+					completion.kind = settings.get('completionItemKind');
 					completion.command = { command: 'editor.action.triggerSuggest', title: 'Trigger Suggest' };
 					return completion;
 				});
