@@ -13,6 +13,211 @@
     "*"
   ],
   "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Partial Autocomplete",
+      "properties": {
+        "partial-autocomplete.completionItemKind": {
+          "type": "number",
+          "default": 14,
+          "enum": [
+            6,
+            15,
+            20,
+            3,
+            12,
+            19,
+            22,
+            4,
+            16,
+            18,
+            2,
+            7,
+            26,
+            13,
+            1,
+            8,
+            23,
+            9,
+            17,
+            14,
+            21,
+            0,
+            24,
+            10,
+            25,
+            11,
+            5
+          ],
+          "enumDescriptions": [
+            "Class",
+            "Color",
+            "Constant",
+            "Constructor",
+            "Enum",
+            "EnumMember",
+            "Event",
+            "Field",
+            "File",
+            "Folder",
+            "Function",
+            "Interface",
+            "Issue",
+            "Keyword",
+            "Method",
+            "Module",
+            "Operator",
+            "Property",
+            "Reference",
+            "Snippet",
+            "Struct",
+            "Text",
+            "TypeParameter",
+            "Unit",
+            "User",
+            "Value",
+            "Variable"
+          ],
+          "description": "Specifies the CompletionItemKind to use for partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindClass": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include classes in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindColor": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include colors in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindConstant": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include constants in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindConstructor": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include constructors in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindEnum": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include enums in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindEnumMember": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include enum members in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindEvent": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include events in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindField": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include fields in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindFile": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include files in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindFolder": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include folders in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindFunction": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include functions in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindInterface": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include interfaces in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindIssue": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include issues in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindKeyword": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include keywords in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindMethod": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include methods in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindModule": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include modules in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindOperator": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include operators in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindProperty": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include properties in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindReference": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include references in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindSnippet": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include snippets in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindStruct": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include structs in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindText": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include texts in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindTypeParameter": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include type parameters in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindUnit": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include units in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindUser": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include user in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindValue": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include values in partial auto-completion."
+        },
+        "partial-autocomplete.includeItemKindVariable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include variables in partial auto-completion."
+        }
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
