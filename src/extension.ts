@@ -62,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
 													})
 													.filter(item => item.startsWith(word));
 
-			const processed = processNode(completionTexts).filter(item => item !== word);
+			const processed = processCompletions(completionTexts).filter(item => item !== word);
 			
 			const completions = processed.map(item => {
 					let completion = new vscode.CompletionItem(item);
@@ -81,36 +81,30 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 
-function processNode(node: string[], chars: number = 0): string[] {
+function processCompletions(completions: string[], charactersCount: number = 0): string[] {
 	const result: string[] = [];
 
-	if (node.length > 1) {
-		const initialChars = chars;
-		while (node.length > 0) {
-			const reference = node[0];
-			chars = initialChars + 1;
-			let items: string[] = node.filter(item => item.startsWith(reference.slice(0, chars)));
-			chars += 1;
-			for (; chars <= reference.length && items.length > 1; chars++) {
+	while (completions.length > 1) {	// If we are left with only one item, it means it's unique.
+		const reference = completions[0];
+		let chars = charactersCount + 1;
+		let items: string[] = completions.filter(item => item.startsWith(reference.slice(0, chars)));
+		if (items.length > 1) {
+			// Loop until items divert.
+			for (chars++; chars <= reference.length; chars++) {
 				let new_items = items.filter(item => item.startsWith(reference.slice(0, chars)));
-				if (new_items.length < items.length) {
-					break;
-				}
+				if (new_items.length < items.length) break;
 				items = new_items;
 			}
-			chars -= 1;
-			node = node.filter(item => !items.includes(item));
+			chars--;
 
-			const tag = items.length > 1 ? items[0].slice(0, chars) : reference;
-			if (!items.includes(tag)) {
-				result.push(tag);
-			}
-			items = items.filter(item => item !== tag);
-			const processed = processNode(items, chars);
-			for (let item of processed) {
-				result.push(item);
-			}
+			const commonPart = items[0].slice(0, chars);
+			if (!items.includes(commonPart)) result.push(commonPart);
+			
+			const filtered = items.filter(item => item !== commonPart);
+			const processed = processCompletions(filtered, chars);
+			result.push(...processed);
 		}
+		completions = completions.filter(item => !items.includes(item));
 	}
 
 	return result;
