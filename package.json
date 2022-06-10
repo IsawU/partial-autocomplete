@@ -10,17 +10,9 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:partial-autocomplete.helloWorld"
+    "*"
   ],
   "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "partial-autocomplete.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
