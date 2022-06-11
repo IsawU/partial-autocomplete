@@ -66,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
 			
 			const completions = processed.map(item => {
 					let completion = new vscode.CompletionItem(item);
-					completion.sortText = ' ';
+					completion.sortText = settings.get('completionItemSortString');
 					completion.detail = ':partial';
 					completion.kind = settings.get('completionItemKind');
 					completion.command = { command: 'editor.action.triggerSuggest', title: 'Trigger Suggest' };
