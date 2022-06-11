@@ -1,70 +1,52 @@
-# partial-autocomplete README
+# Partial Autocomplete
 
-This is the README for your extension "partial-autocomplete". After writing up a brief description, we recommend including the following sections.
-
-## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This extension adds the ability to auto-complete by incremental steps. (Think bash auto-completion.)
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+### Suggested Completions Settngs
 
-For example:
+- `partial-autocomplete.completionItemKind`: Specifies the CompletionItemKind to use for partial auto-completion. Affects the icon displayed next to the suggestion.
+- `partial-autocomplete.completionItemSortString`: The sort string to use for partial completions.
 
-This extension contributes the following settings:
+### Scope Settings
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+- `partial-autocomplete.includeCompletionItemKindClass`: Include classes in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindColor`: Include colors in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindConstant`: Include constants in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindConstructor`: Include constructors in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindEnum`: Include enums in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindEnumMember`: Include enum members in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindEvent`: Include events in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindField`: Include fields in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindFile`: Include files in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindFolder`: Include folders in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindFunction`: Include functions in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindInterface`: Include interfaces in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindIssue`: Include issues in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindKeyword`: Include keywords in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindMethod`: Include methods in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindModule`: Include modules in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindOperator`: Include operators in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindProperty`: Include properties in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindReference`: Include references in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindSnippet`: Include snippets in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindStruct`: Include structs in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindText`: Include texts in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindTypeParameter`: Include type parameters in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindUnit`: Include units in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindUser`: Include user in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindValue`: Include values in partial auto-completion.
+- `partial-autocomplete.includeCompletionItemKindVariable`: Include variables in partial auto-completion.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Determining the common substrings can be slow when many completions are available and valid for the word at the cursor.
+- Some suggestions shown will not have parts suggested. This concerns auto-corrected suggestions (changed capital letters/unscrambled words/…).
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.1.0
 
-### 1.0.0
+Initial release
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
