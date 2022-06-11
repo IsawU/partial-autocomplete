@@ -107,7 +107,7 @@ function processCompletions(completions: string[], charactersCount: number = 0):
 			chars--;
 
 			const commonPart = items[0].slice(0, chars);
-			if (!items.includes(commonPart)) result.push(commonPart);
+			result.push(commonPart);
 			
 			const filtered = items.filter(item => item !== commonPart);
 			const processed = processCompletions(filtered, chars);
