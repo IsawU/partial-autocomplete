@@ -3,19 +3,16 @@ import * as vscode from 'vscode';
 
 
 export function activate(context: vscode.ExtensionContext) {
-	let skip = false;
+	let skip = true;
 
 	const provider = vscode.languages.registerCompletionItemProvider({scheme: 'file'}, {
 		async provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			// Skip every other invokation to prevent infinite loops. Looking for a better solution.
-			skip = !skip;
-			if (!skip) return [];
+			if (skip = !skip) return [];
 
 			const editor = vscode.window.activeTextEditor;
-			if (editor === undefined) return [];
-
-			const srcRange = editor.document.getWordRangeAtPosition(position);
-			if (srcRange === undefined) return [];
+			const srcRange = editor?.document.getWordRangeAtPosition(position);
+			if (srcRange === undefined || editor === undefined) return [];	// The editor condition is just for TypeScript sake.
 			const range = new vscode.Range(srcRange.start, position);
 			const word = editor.document.getText(range);
 
@@ -23,55 +20,48 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const completionList: vscode.CompletionList = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', document.uri, position);
 			const completionTexts = completionList.items.filter(item => {
-														const kind = item.kind;
-														return kind == vscode.CompletionItemKind.Class && settings.get('includeCompletionItemKindClass') ||
-															kind == vscode.CompletionItemKind.Color && settings.get('includeCompletionItemKindColor') ||
-															kind == vscode.CompletionItemKind.Constant && settings.get('includeCompletionItemKindConstant') ||
-															kind == vscode.CompletionItemKind.Constructor && settings.get('includeCompletionItemKindConstructor') ||
-															kind == vscode.CompletionItemKind.Enum && settings.get('includeCompletionItemKindEnum') ||
-															kind == vscode.CompletionItemKind.EnumMember && settings.get('includeCompletionItemKindEnumMember') ||
-															kind == vscode.CompletionItemKind.Event && settings.get('includeCompletionItemKindEvent') ||
-															kind == vscode.CompletionItemKind.Field && settings.get('includeCompletionItemKindField') ||
-															kind == vscode.CompletionItemKind.File && settings.get('includeCompletionItemKindFile') ||
-															kind == vscode.CompletionItemKind.Folder && settings.get('includeCompletionItemKindFolder') ||
-															kind == vscode.CompletionItemKind.Function && settings.get('includeCompletionItemKindFunction') ||
-															kind == vscode.CompletionItemKind.Interface && settings.get('includeCompletionItemKindInterface') ||
-															kind == vscode.CompletionItemKind.Issue && settings.get('includeCompletionItemKindIssue') ||
-															kind == vscode.CompletionItemKind.Keyword && settings.get('includeCompletionItemKindKeyword') ||
-															kind == vscode.CompletionItemKind.Method && settings.get('includeCompletionItemKindMethod') ||
-															kind == vscode.CompletionItemKind.Module && settings.get('includeCompletionItemKindModule') ||
-															kind == vscode.CompletionItemKind.Operator && settings.get('includeCompletionItemKindOperator') ||
-															kind == vscode.CompletionItemKind.Property && settings.get('includeCompletionItemKindProperty') ||
-															kind == vscode.CompletionItemKind.Reference && settings.get('includeCompletionItemKindReference') ||
-															kind == vscode.CompletionItemKind.Snippet && settings.get('includeCompletionItemKindSnippet') ||
-															kind == vscode.CompletionItemKind.Struct && settings.get('includeCompletionItemKindStruct') ||
-															kind == vscode.CompletionItemKind.Text && settings.get('includeCompletionItemKindText') ||
-															kind == vscode.CompletionItemKind.TypeParameter && settings.get('includeCompletionItemKindTypeParameter') ||
-															kind == vscode.CompletionItemKind.Unit && settings.get('includeCompletionItemKindUnit') ||
-															kind == vscode.CompletionItemKind.User && settings.get('includeCompletionItemKindUser') ||
-															kind == vscode.CompletionItemKind.Value && settings.get('includeCompletionItemKindValue') ||
-															kind == vscode.CompletionItemKind.Variable && settings.get('includeCompletionItemKindVariable');
-													})
-													.map(item => {
-														if (item.insertText instanceof vscode.SnippetString) {
-															return item.insertText.value;
-														}
-														else {
-															return item.insertText ?? item.label.toString();
-														}
-													})
-													.filter(item => item.startsWith(word));
+						const kind = item.kind;
+						return kind === undefined ||
+							kind === vscode.CompletionItemKind.Class && settings.get('includeCompletionItemKindClass', true) ||
+							kind === vscode.CompletionItemKind.Color && settings.get('includeCompletionItemKindColor', false) ||
+							kind === vscode.CompletionItemKind.Constant && settings.get('includeCompletionItemKindConstant', true) ||
+							kind === vscode.CompletionItemKind.Constructor && settings.get('includeCompletionItemKindConstructor', true) ||
+							kind === vscode.CompletionItemKind.Enum && settings.get('includeCompletionItemKindEnum', true) ||
+							kind === vscode.CompletionItemKind.EnumMember && settings.get('includeCompletionItemKindEnumMember', true) ||
+							kind === vscode.CompletionItemKind.Event && settings.get('includeCompletionItemKindEvent', false) ||
+							kind === vscode.CompletionItemKind.Field && settings.get('includeCompletionItemKindField', true) ||
+							kind === vscode.CompletionItemKind.File && settings.get('includeCompletionItemKindFile', true) ||
+							kind === vscode.CompletionItemKind.Folder && settings.get('includeCompletionItemKindFolder', true) ||
+							kind === vscode.CompletionItemKind.Function && settings.get('includeCompletionItemKindFunction', true) ||
+							kind === vscode.CompletionItemKind.Interface && settings.get('includeCompletionItemKindInterface', true) ||
+							kind === vscode.CompletionItemKind.Issue && settings.get('includeCompletionItemKindIssue', false) ||
+							kind === vscode.CompletionItemKind.Keyword && settings.get('includeCompletionItemKindKeyword', true) ||
+							kind === vscode.CompletionItemKind.Method && settings.get('includeCompletionItemKindMethod', true) ||
+							kind === vscode.CompletionItemKind.Module && settings.get('includeCompletionItemKindModule', true) ||
+							kind === vscode.CompletionItemKind.Operator && settings.get('includeCompletionItemKindOperator', false) ||
+							kind === vscode.CompletionItemKind.Property && settings.get('includeCompletionItemKindProperty', true) ||
+							kind === vscode.CompletionItemKind.Reference && settings.get('includeCompletionItemKindReference', true) ||
+							kind === vscode.CompletionItemKind.Snippet && settings.get('includeCompletionItemKindSnippet', false) ||
+							kind === vscode.CompletionItemKind.Struct && settings.get('includeCompletionItemKindStruct', true) ||
+							kind === vscode.CompletionItemKind.Text && settings.get('includeCompletionItemKindText', false) ||
+							kind === vscode.CompletionItemKind.TypeParameter && settings.get('includeCompletionItemKindTypeParameter', false) ||
+							kind === vscode.CompletionItemKind.Unit && settings.get('includeCompletionItemKindUnit', false) ||
+							kind === vscode.CompletionItemKind.User && settings.get('includeCompletionItemKindUser', false) ||
+							kind === vscode.CompletionItemKind.Value && settings.get('includeCompletionItemKindValue', false) ||
+							kind === vscode.CompletionItemKind.Variable && settings.get('includeCompletionItemKindVariable', true);
+					})
+					.map(item => getCompletionItemText(item))
+					.filter(item => item.startsWith(word));
 
-			const processed = processCompletions(completionTexts).filter(item => item !== word);
-			
-			const completions = processed.map(item => {
-					let completion = new vscode.CompletionItem(item);
-					completion.sortText = settings.get('completionItemSortString');
-					completion.detail = ':partial';
-					completion.kind = settings.get('completionItemKind');
-					completion.command = { command: 'editor.action.triggerSuggest', title: 'Trigger Suggest' };
-					return completion;
-				});
+			const completions = processCompletions(completionTexts)
+					.filter(item => item !== word)
+					.map(item => {
+						const completion = new vscode.CompletionItem({label: item, detail: '…', description: 'partial'});
+						completion.sortText = settings.get('completionItemSortString', ' ');
+						completion.kind = settings.get('completionItemKind');
+						completion.command = { command: 'editor.action.triggerSuggest', title: 'Trigger Suggest' };
+						return completion;
+					});
 			return completions;
 		}
 	});
@@ -80,6 +70,25 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 
+
+function getCompletionItemText(completion: vscode.CompletionItem): string {
+	if (completion.insertText !== undefined) {
+		if (completion.insertText instanceof vscode.SnippetString) {
+			return completion.insertText.value;
+		}
+		else {
+			return completion.insertText;
+		}
+	}
+	else {
+		if (typeof completion.label == 'object') {
+			return completion.label.label;
+		}
+		else {
+			return completion.label;
+		}
+	}
+}
 
 function processCompletions(completions: string[], charactersCount: number = 0): string[] {
 	const result: string[] = [];
