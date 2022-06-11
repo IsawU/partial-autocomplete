@@ -1,8 +1,8 @@
 {
   "name": "partial-autocomplete",
   "displayName": "Partial Autocomplete",
-  "description": "Suggests partial auto-completion when more than 1 auto-completion is available.",
-  "version": "0.0.1",
+  "description": "Adds common substrings to suggested completions list for partial auto-completion.",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.68.0"
   },
@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -78,7 +78,7 @@
             "Value",
             "Variable"
           ],
-          "description": "Specifies the CompletionItemKind to use for partial auto-completion."
+          "description": "Specifies the CompletionItemKind to use for partial auto-completion. Affects the icon displayed next to the suggestion."
         },
         "partial-autocomplete.completionItemSortString": {
           "type": "string",
