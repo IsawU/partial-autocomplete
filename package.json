@@ -80,6 +80,11 @@
           ],
           "description": "Specifies the CompletionItemKind to use for partial auto-completion."
         },
+        "partial-autocomplete.completionItemSortString": {
+          "type": "string",
+          "default": " ",
+          "description": "The sort string to use for partial completions."
+        },
         "partial-autocomplete.includeCompletionItemKindClass": {
           "type": "boolean",
           "default": true,
