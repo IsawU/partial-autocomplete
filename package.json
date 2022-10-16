@@ -1,13 +1,26 @@
 {
   "name": "partial-autocomplete",
+  "version": "0.1.0",
   "displayName": "Partial Autocomplete",
   "description": "Adds common substrings to suggested completions list for partial auto-completion.",
-  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "icon": "images/icon.jpg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IsawU/partial-autocomplete.git"
+  },
   "engines": {
     "vscode": "^1.68.0"
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "autocomplete",
+    "complete",
+    "suggest",
+    "partial",
+    "tab"
   ],
   "activationEvents": [
     "onStartupFinished"
