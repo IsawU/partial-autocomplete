@@ -1,7 +1,9 @@
 {
   "name": "partial-autocomplete",
+  "version": "0.1.0",
   "displayName": "Partial Autocomplete",
   "description": "Adds common substrings to suggested completions list for partial auto-completion.",
+  "license": "SEE LICENSE IN LICENSE",
   "icon": "images/icon.jpg",
   "repository": {
     "type": "git",
@@ -12,6 +14,13 @@
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "autocomplete",
+    "complete",
+    "suggest",
+    "partial",
+    "tab"
   ],
   "activationEvents": [
     "onStartupFinished"
