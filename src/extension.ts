@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 
 
-
 export function activate(context: vscode.ExtensionContext) {
 	let skip = true;
 
@@ -19,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const settings = vscode.workspace.getConfiguration('partial-autocomplete');
 
 			const completionList: vscode.CompletionList = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', document.uri, position);
-			const completionTexts = completionList.items.filter(item => {
+			const completionTexts = completionList.items.filter((item: vscode.CompletionItem) => {
 						const kind = item.kind;
 						return kind === undefined ||
 							kind === vscode.CompletionItemKind.Class && settings.get('includeCompletionItemKindClass', true) ||
@@ -50,8 +49,8 @@ export function activate(context: vscode.ExtensionContext) {
 							kind === vscode.CompletionItemKind.Value && settings.get('includeCompletionItemKindValue', false) ||
 							kind === vscode.CompletionItemKind.Variable && settings.get('includeCompletionItemKindVariable', true);
 					})
-					.map(item => getCompletionItemText(item))
-					.filter(item => item.startsWith(word));
+					.map((item: vscode.CompletionItem) => getCompletionItemText(item))
+					.filter((item: string) => item.startsWith(word));
 
 			const completions = processCompletions(completionTexts)
 					.filter(item => item !== word)
@@ -68,7 +67,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(provider);
 }
-
 
 
 function getCompletionItemText(completion: vscode.CompletionItem): string {
@@ -90,30 +88,38 @@ function getCompletionItemText(completion: vscode.CompletionItem): string {
 	}
 }
 
-function processCompletions(completions: string[], charactersCount: number = 0): string[] {
+function processCompletions(completions: string[], startCharacter: number = 1): string[] {
 	const result: string[] = [];
 
-	while (completions.length > 1) {	// If we are left with only one item, it means it's unique.
-		const reference = completions[0];
-		let chars = charactersCount + 1;
-		let items: string[] = completions.filter(item => item.startsWith(reference.slice(0, chars)));
-		if (items.length > 1) {
-			// Loop until items divert.
-			for (chars++; chars <= reference.length; chars++) {
-				let new_items = items.filter(item => item.startsWith(reference.slice(0, chars)));
-				if (new_items.length < items.length) break;
-				items = new_items;
+	if (completions.length > 1) {
+		for (let character = startCharacter; character <= completions[0].length; ++character) {
+			const commonPart = completions[0].slice(0, character);
+			const differs = completions.find(item => !item.startsWith(commonPart));
+			if (differs != null) {
+				// commonPart now contains common substring + 1 character,
+				// but if we just started, we already have this substring.
+				if (character != startCharacter) {
+					const commonSubstring = commonPart.slice(0, -1);
+					result.push(commonSubstring);
+				}
+				// Process all the differing items recursively.
+				const differingCompletions = completions.filter(item => !item.startsWith(commonPart));
+				const processed = processCompletions(differingCompletions, commonPart.length);
+				result.push(...processed);
+				// Remove completions processed recursively.
+				completions = completions.filter(item => item.startsWith(commonPart));
 			}
-			chars--;
-
-			const commonPart = items[0].slice(0, chars);
-			result.push(commonPart);
-			
-			const filtered = items.filter(item => item !== commonPart);
-			const processed = processCompletions(filtered, chars);
-			result.push(...processed);
+			else if (character == completions[0].length) {
+				result.push(completions[0]);
+				// Remove the current reference.
+				completions = completions.slice(1);
+				// Adjust start character. Avoids duplicates when we have
+				// multiple branches just beyond our original reference word.
+				startCharacter = character + 1;
+			}
+			// If we are left with one completion, we are done.
+			if (completions.length <= 1) break;
 		}
-		completions = completions.filter(item => !items.includes(item));
 	}
 
 	return result;
