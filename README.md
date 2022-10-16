@@ -4,6 +4,11 @@ This extension adds the ability to auto-complete by incremental steps. (Think ba
 
 ![demonstration](images/demo.webp)
 
+## Troubleshooting
+
+- My suggestions are not detected by Partial Autocomplete
+    - See extension settings. Some languages (for example Lua) use `CompletionItemKind.Text` (plain text) for suggestions. `Text` suggestions are ignored with the default settings.
+
 ## Extension Settings
 
 ### Suggested Completions Settngs
