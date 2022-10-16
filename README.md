@@ -2,11 +2,18 @@
 
 This extension adds the ability to auto-complete by incremental steps. (Think bash auto-completion.)
 
+![demonstration](images/demo.webp)
+
+## Troubleshooting
+
+- My suggestions are not detected by Partial Autocomplete
+    - See extension settings. Some languages (for example Lua) use `CompletionItemKind.Text` (plain text) for suggestions. `Text` suggestions are ignored with the default settings.
+
 ## Extension Settings
 
 ### Suggested Completions Settngs
 
-- `partial-autocomplete.completionItemKind`: Specifies the CompletionItemKind to use for partial auto-completion. Affects the icon displayed next to the suggestion.
+- `partial-autocomplete.completionItemKind`: Specifies the `CompletionItemKind` to use for partial auto-completion. Affects the icon displayed next to the suggestion.
 - `partial-autocomplete.completionItemSortString`: The sort string to use for partial completions.
 
 ### Scope Settings
@@ -41,12 +48,5 @@ This extension adds the ability to auto-complete by incremental steps. (Think ba
 
 ## Known Issues
 
-- Determining the common substrings can be slow when many completions are available and valid for the word at the cursor.
 - Some suggestions shown will not have parts suggested. This concerns auto-corrected suggestions (changed capital letters/unscrambled words/…).
-
-## Release Notes
-
-### 0.1.0
-
-Initial release
-
+    - The extension filters suggestions that start with the word before the cursor. This is to improve performance.
