@@ -33,3 +33,9 @@ and this project makes an attempt to adhere to [Semantic Versioning](https://sem
 
 - Improved the self-invocation skipping to fix potential issues with the previous approach.
 
+## [0.2.1] - 2022-10-16
+
+### Added
+
+- Added extension publisher.
+
