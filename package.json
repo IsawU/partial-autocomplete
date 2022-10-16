@@ -2,6 +2,7 @@
   "name": "partial-autocomplete",
   "displayName": "Partial Autocomplete",
   "description": "Adds common substrings to suggested completions list for partial auto-completion.",
+  "icon": "images/icon.jpg",
   "repository": {
     "type": "git",
     "url": "https://github.com/IsawU/partial-autocomplete.git"
