@@ -9,11 +9,15 @@ export function activate(context: vscode.ExtensionContext) {
 			// It would be for the best if we could provide our own context.triggerKind.
 			if (skipInvocation) return [];
 
+			if (token.isCancellationRequested) return [];
+
 			const editor = vscode.window.activeTextEditor;
 			const srcRange = editor?.document.getWordRangeAtPosition(position);
 			if (srcRange === undefined || editor === undefined) return [];	// The editor condition is just for TypeScript sake.
 			const range = new vscode.Range(srcRange.start, position);
 			const word = editor.document.getText(range);
+
+			if (token.isCancellationRequested) return [];
 
 			const settings = vscode.workspace.getConfiguration('partial-autocomplete');
 
@@ -53,6 +57,8 @@ export function activate(context: vscode.ExtensionContext) {
 					})
 					.map((item: vscode.CompletionItem) => getCompletionItemText(item))
 					.filter((item: string) => item.startsWith(word));
+
+			if (token.isCancellationRequested) return [];
 
 			const completions = processCompletions(completionTexts)
 					.filter(item => item !== word)
