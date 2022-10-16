@@ -13,6 +13,7 @@ and this project makes an attempt to adhere to [Semantic Versioning](https://sem
 - Added some types that were incorrectly inferred.
 - Added cancellation request checking.
 - Added MIT license.
+- Added repository.
 
 ### Changed
 
