@@ -1,6 +1,7 @@
 {
   "name": "partial-autocomplete",
   "version": "0.2.0",
+  "publisher": "isawu",
   "displayName": "Partial Autocomplete",
   "description": "Adds common substrings to suggested completions list for partial auto-completion.",
   "license": "SEE LICENSE IN LICENSE",
