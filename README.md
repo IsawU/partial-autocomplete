@@ -46,7 +46,5 @@ This extension adds the ability to auto-complete by incremental steps. (Think ba
 
 ## Release Notes
 
-### 0.1.0
-
-Initial release
+[Changelog](CHANGELOG.md)
 
