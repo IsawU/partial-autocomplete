@@ -2,6 +2,8 @@
 
 This extension adds the ability to auto-complete by incremental steps. (Think bash auto-completion.)
 
+![demonstration](images/demo.webp)
+
 ## Extension Settings
 
 ### Suggested Completions Settngs
