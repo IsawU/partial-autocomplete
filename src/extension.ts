@@ -2,12 +2,12 @@ import * as vscode from 'vscode';
 
 
 export function activate(context: vscode.ExtensionContext) {
-	let skip = true;
+	var skipInvocation = false;
 
 	const provider = vscode.languages.registerCompletionItemProvider({scheme: 'file'}, {
 		async provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
-			// Skip every other invokation to prevent infinite loops. Looking for a better solution.
-			if (skip = !skip) return [];
+			// It would be for the best if we could provide our own context.triggerKind.
+			if (skipInvocation) return [];
 
 			const editor = vscode.window.activeTextEditor;
 			const srcRange = editor?.document.getWordRangeAtPosition(position);
@@ -17,7 +17,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const settings = vscode.workspace.getConfiguration('partial-autocomplete');
 
+			skipInvocation = true;	// We need to prevent self invocation to avoid infinite loop.
 			const completionList: vscode.CompletionList = await vscode.commands.executeCommand('vscode.executeCompletionItemProvider', document.uri, position);
+			skipInvocation = false;
 			const completionTexts = completionList.items.filter((item: vscode.CompletionItem) => {
 						const kind = item.kind;
 						return kind === undefined ||
