@@ -7,12 +7,11 @@ and this project makes an attempt to adhere to [Semantic Versioning](https://sem
 
 ## [Unreleased]
 
-
-## [0.1.0] - 2022-06-11
+## [0.2.1] - 2022-10-16
 
 ### Added
-- Initial extension implemented.
 
+- Added extension publisher.
 
 ## [0.2.0] - 2022-10-16
 
@@ -33,9 +32,7 @@ and this project makes an attempt to adhere to [Semantic Versioning](https://sem
 
 - Improved the self-invocation skipping to fix potential issues with the previous approach.
 
-## [0.2.1] - 2022-10-16
+## [0.1.0] - 2022-06-11
 
 ### Added
-
-- Added extension publisher.
-
+- Initial extension implemented.
